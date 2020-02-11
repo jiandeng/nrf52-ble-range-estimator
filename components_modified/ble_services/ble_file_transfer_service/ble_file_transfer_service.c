@@ -91,8 +91,6 @@ static uint32_t m_file_object_sent_byte = 0;
  */
 static void on_connect(ble_fts_t *p_fts, ble_evt_t const *p_ble_evt)
 {
-        ret_code_t err_code;
-
         if (p_fts != NULL)
         {
                 p_fts->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;

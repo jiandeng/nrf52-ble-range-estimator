@@ -203,13 +203,13 @@ static void scan_start(void);
 /********************************************************************************/
 
 
-static void request_phy(uint16_t c_handle, uint8_t phy)
-{
-        ble_gap_phys_t phy_req;
-        phy_req.tx_phys = phy;
-        phy_req.rx_phys = phy;
-        sd_ble_gap_phy_update(c_handle, &phy_req);
-}
+// static void request_phy(uint16_t c_handle, uint8_t phy)
+// {
+//         ble_gap_phys_t phy_req;
+//         phy_req.tx_phys = phy;
+//         phy_req.rx_phys = phy;
+//         sd_ble_gap_phy_update(c_handle, &phy_req);
+// }
 
 /**@brief Function for handling asserts in the SoftDevice.
  *
@@ -532,6 +532,8 @@ static void ble_its_c_evt_handler(ble_its_c_t *p_ble_its_c, ble_its_c_evt_t cons
 
         case BLE_ITS_C_EVT_DISCONNECTED:
                 NRF_LOG_DEBUG("Disconnected.");
+                break;
+        default:
                 break;
         }
 }
@@ -988,7 +990,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
                         else
                         {
                                 // Set the correct TX power.
-                                err_code = sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_SCAN_INIT, NULL, tx_power);
+                                err_code = sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_SCAN_INIT, 0, tx_power);
                                 APP_ERROR_CHECK(err_code);
 
                                 NRF_LOG_INFO("TX Power for Advertising: %d", tx_power);
@@ -1153,6 +1155,8 @@ static void psr_update_timeout_handler(void * p_context)
         psr_value = m_application_state.psr;
 
         err_code = ble_fts_c_rx_cmd_send(&m_ble_fts_c, &psr_value, sizeof(psr_value));
+        if(err_code != NRF_SUCCESS) {
+        }
 
         display_update();
 }

@@ -162,10 +162,10 @@ static uint16_t m_ble_nus_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3;          
 static uint16_t m_ble_its_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3; /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 static uint16_t m_ble_fts_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3; /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic File Transfer service module. */
 
-static ble_uuid_t m_adv_uuids[]          =                                          /**< Universally unique service identifier. */
-{
-        {BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}
-};
+// static ble_uuid_t m_adv_uuids[]          =                                          [>*< Universally unique service identifier. <]
+// {
+//         {BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}
+// };
 
 static uint8_t rssi_count = 0;
 
@@ -978,7 +978,6 @@ static void display_update()
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
         ret_code_t err_code;
-        ble_gap_phys_t phys;
 
         switch (pin_no)
         {
@@ -1139,8 +1138,6 @@ static void advertising_start(void)
  */
 int main(void)
 {
-        bool erase_bonds;
-
         // Initialize.
         uart_init();
         log_init();

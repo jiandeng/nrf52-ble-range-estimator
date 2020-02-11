@@ -78,8 +78,6 @@ static volatile uint32_t file_size = 0, file_pos = 0, m_max_data_length = 20;
 static uint8_t *file_data;
 static ble_its_t *m_its;
 
-static uint32_t count = 0;
-
 // static ble_its_img_info_t m_image_info;
 static uint32_t m_image_send_byte = 0;
 

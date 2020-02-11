@@ -154,7 +154,7 @@ typedef PACKED ( struct
         ble_its_evt_type_t evt_type;
         uint16_t conn_handle;
         uint16_t max_data_len;
-        uint8_t * p_data;
+        const uint8_t * p_data;
         uint16_t data_len;
 }) ble_its_evt_t;
 
