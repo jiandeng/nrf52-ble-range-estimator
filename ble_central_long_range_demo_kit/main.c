@@ -72,6 +72,8 @@
 #include "app_display.h"
 #include "packet_error_rate.h"
 
+#define DEFAULT_PHY                       APP_PHY_1M
+#define DEFAULT_TX_POWER                  8
 
 
 // #define HOST_RX_DATA_SEND_BUTTON                BSP_BUTTON_2
@@ -124,7 +126,10 @@
         } while (0)
 
 static void display_update(void);
-app_display_content_t m_application_state = {0};                                   /**< Struct containing the dynamic content of the display */
+app_display_content_t m_application_state = {
+  .phy = DEFAULT_PHY,
+  .tx_power = DEFAULT_TX_POWER / 4,
+};                                   /**< Struct containing the dynamic content of the display */
 
 BLE_NUS_C_DEF(m_ble_nus_c);                                             /**< BLE Nordic UART Service (NUS) client instance. */
 NRF_BLE_GATT_DEF(m_gatt);                                               /**< GATT module instance. */
@@ -1237,6 +1242,7 @@ int main(void)
         // Start execution.
         NRF_LOG_INFO("\n\n\n\n");
         NRF_LOG_INFO("Long range demo  --central-.");
+        scan_start();
 
         app_display_init(&m_application_state);
         display_update();

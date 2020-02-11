@@ -90,6 +90,9 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#define DEFAULT_PHY                       APP_PHY_1M
+#define DEFAULT_TX_POWER                  8
+
 #define PHY_SELECTION_BUTTON              BSP_BUTTON_0
 #define TX_POWER_BUTTON                   BSP_BUTTON_1
 #define APP_STATE_BUTTON                  BSP_BUTTON_2
@@ -191,7 +194,10 @@ static ble_gap_adv_data_t m_adv_data =
 APP_TIMER_DEF(m_restart_advertising_timer_id);
 
 static void display_update(void);
-app_display_content_t m_application_state = {0};                                   /**< Struct containing the dynamic content of the display */
+app_display_content_t m_application_state = {
+  .phy = DEFAULT_PHY,
+  .tx_power = DEFAULT_TX_POWER / 4,
+};                                   /**< Struct containing the dynamic content of the display */
 
 
 static void advertising_init(void);
@@ -1103,6 +1109,7 @@ static void advertising_start(void)
 
         if (m_application_state.app_state == APP_STATE_IDLE)
         {
+                NRF_LOG_INFO("Advertising start");
                 err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
                 if(err_code == NRF_SUCCESS)
                 {
@@ -1118,6 +1125,7 @@ static void advertising_start(void)
         }
         else if (m_application_state.app_state == APP_STATE_DISCONNECTED)
         {
+                NRF_LOG_INFO("Advertising start");
                 err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
                 if(err_code == NRF_SUCCESS)
                 {
@@ -1156,7 +1164,7 @@ int main(void)
         // Start execution.
         NRF_LOG_INFO("\n\n\n\n");
         NRF_LOG_INFO("New Firmware Start %s", (uint8_t *)DEVICE_NAME);
-//        advertising_start();
+        advertising_start();
 
         app_display_init(&m_application_state);
         display_update();
